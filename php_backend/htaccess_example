@@ -1,0 +1,39 @@
+
+
+<Files "init.php">
+  Order Deny,Allow
+  Deny from all
+  Allow from 127.0.0.1 ::1
+</Files>
+
+
+<Files "orders.php">
+  Order Allow,Deny
+  Allow from all
+</Files>
+
+
+<Files "products.php">
+  Order Allow,Deny
+  Allow from all
+</Files>
+
+
+<Files "payment_methods.php">
+  Order Allow,Deny
+  Allow from all
+</Files>
+
+
+<Files "htaccess_example">
+  Order Deny,Allow
+  Deny from all
+</Files>
+
+
+# Environments
+
+# For PDO
+SetEnv DB_DSN "" # database dsn
+SetEnv DB_USERNAME "" # database user
+SetEnv DB_PASSWORD "" # database user password (optional)
