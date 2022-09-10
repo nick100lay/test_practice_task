@@ -39,8 +39,8 @@ python  test_api.py <domain> # Протестировать API
 В случае ошибки возвращается код и сообщение:
 ```json
 {
-	"status": <int>,
-	"error_msg": <string>
+	"status": "int",
+	"error_msg": "string"
 }
 ```
 Если ошибок нет, то JSON будет иметь статус 0:
@@ -87,7 +87,10 @@ const ERROR_DB_FAIL = 6;
 {
 	"status": 0,
 	"payment_methods": [
-		{"id": <string>, "name": <string> }
+		{
+			"id": "string", 
+			"name": "string" 
+		}
 		...
 	]
 }
@@ -97,8 +100,8 @@ const ERROR_DB_FAIL = 6;
 Получить товары по запросу, либо получить товары с большим рейтингом.
 Принимает JSON следующих видов:
 ```json
-{"id": <string>} // Получить по id
-{"query": <string>} // Получить по текстовому запросу
+{"id": "string"} // Получить по id
+{"query": "string"} // Получить по текстовому запросу
 {} // Получить товары с большим рейтингом
 ```
 Возвращает JSON следующего вида (возвращаемые товары отсортированы по убыванию рейтингу):
@@ -107,11 +110,11 @@ const ERROR_DB_FAIL = 6;
 	"status": 0,
 	"products": [
 		{
-			"id": <string>,
-			"name": <string>,
-			"price": <string>,
-			"rating": <string>,
-			"description": <string|null>
+			"id": "string",
+			"name": "string",
+			"price": "string",
+			"rating": "string",
+			"description": "string|null"
 		}
 		...
 	]
@@ -124,11 +127,11 @@ const ERROR_DB_FAIL = 6;
 ```json
 [
 	{
-		"id": <string>,
-		"name": <string>,
-		"price": <string>,
-		"rating": <string>,
-		"description": <string optional>
+		"id": "string",
+		"name": "string",
+		"price": "string",
+		"rating": "string",
+		"description": "string optional"
 	}
 	...
 ]
@@ -141,9 +144,9 @@ const ERROR_DB_FAIL = 6;
 ```json
 // Номер телефона должен быть в виде '+7 xxx xxx-xx-xx'.
 // Получить по номеру телефона
-{"phone_number": <string>}
+{"phone_number": "string"}
 
-{"contract_number": <string>} // Получить по номеру договора
+{"contract_number": "string"} // Получить по номеру договора
 ```
 Возвращает JSON следующего вида (возвращаемые товары отсортированы по убыванию рейтингу):
 ```json
@@ -151,25 +154,25 @@ const ERROR_DB_FAIL = 6;
 	"status": 0,
 	"orders": [
 		{
-			"id": <string>,
-			"product_id": <string>,
-			"product_name": <string>,
-			"product_price": <string>,
-			"product_image_url": <string|null>
-			"payment_method_id": <string>,
-			"payment_method_name": <string>,
+			"id": "string",
+			"product_id": "string",
+			"product_name": "string",
+			"product_price": "string",
+			"product_image_url": "string|null"
+			"payment_method_id": "string",
+			"payment_method_name": "string",
 
 			// Номер телефона виде '+7 xxx xxx-xx-xx'.
-			"phone_number": <string>,
+			"phone_number": "string",
 
-			"first_name": <string>,
-			"second_name": <string>,
-			"is_entity": <boolean>,
+			"first_name": "string",
+			"second_name": "string",
+			"is_entity": "boolean",
 
 			// Всегда указан при "is_entity" == true
-			"contract_number": <string|null>,
+			"contract_number": "string|null",
 
-			"created_at": <string>,
+			"created_at": "string",
 		}
 		...
 	]
@@ -182,18 +185,18 @@ const ERROR_DB_FAIL = 6;
 ```json
 [
 	{
-			"product_id": <string>,
-			"payment_method_id": <string>,
+			"product_id": "string",
+			"payment_method_id": "string",
 
 			// Номер телефона должен быть в виде '+7 xxx xxx-xx-xx'.
-			"phone_number": <string>,
+			"phone_number": "string",
 
-			"first_name": <string>,
-			"second_name": <string>,
+			"first_name": "string",
+			"second_name": "string",
 
-			"is_entity": <boolean>,
+			"is_entity": "boolean",
 			// Всегда должен указываться при "is_entity" == true
-			"contract_number": <string optional>
+			"contract_number": "string optional"
 	}
 	...
 ]
