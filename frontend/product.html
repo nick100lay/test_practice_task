@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/waitMe.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="css/waitMe.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
@@ -27,51 +27,35 @@
         <span class="popup-err-msg">Oшибка</span>
 
         <span>Имя:</span>
-        <input type="text"><br>
+        <input name="firstName" type="text"><br>
 
         <span>Фамилия:</span>
-        <input type="text">
+        <input name="secondName" type="text">
 
         <span>Номер телефона:</span>
-        <input type="text">
+        <input name="phoneNumber" type="text">
 
         <span>Способ оплаты:</span>
-        <select name="1" id="">
-          <option value="">МИР</option>
-          <option value="">Visa</option>
-          <option value="">MasterCard</option>
+        <select name="paymentMethodId" id="payment-method">
         </select>
 
         <span>Лицо:</span>
-        <select name="2" id="">
-          <option value="">Юр</option>
-          <option value="">Физ</option>
+        <select id="isEntity" name="isEntity" id="">
+          <option value="1">Юр</option>
+          <option value="0">Физ</option>
         </select>
 
         <span>Номер договора:</span>
-        <input type="text">
+        <input id="contractNumber" name="contractNumber" type="text">
 
-        <button>Отправить</button>
-        <button>Отмена</button>
+        <button id="send-btn">Отправить</button>
+        <button id="cancel-btn">Отмена</button>
       </div>
     </div>
 
 
     <div class="content">
-      <div class="cont-info">
-        <div class="info-image">
-          <img src="https://cdn1.ozone.ru/s3/multimedia-w/wc1000/6304706012.jpg" alt="">
-        </div>
-        <div class="info">
-          <div class="info-cont">
-            <span class="info-title">Кружка "Жожо JOJO аниме", 330 мл, 1 шт</span>
-            <span class="info-price">482 ₽</span>
-            <span class="info-desc">Это что, ДжоДжо референс? Именно! Невероятные приключения Джо Джо аниме - серия выпусков манги, которая начала выходить еще в 80-ых годах и ставшая сверхпопулярным аниме со своими мемами, Представляем вам кружки с Джонатаном Джостаром, его детьми и внуками - Джозефом, Джорно, Джонни и Джолин, а также вместе с остальными героями манги - Дио Брандо, Джайро Цепелли, Спидуагоном и другими! Отличный подарочный набор как для мужчин: мужу, папе, брату, парню, так и для женщин: жене, маме, сестре, девушке, а может и себе. Станет украшением для кухни и любимой кружкой с надписью для чая, кофе. В нашем магазине вы найдете различные прикольные сувениры, кружки с надписями и принтом: аниме, dota 2, наруто, моя геройская академия, клинок рассекающий демонов, токийский гуль, лего, бравл старс, манга и другие подарки с приколом. В профиле нашего магазина вы выберете какой ты мем. В скором времени будут добавлены футболки с принтом: мужские, женские, детские, худи. Упакована в подарочную упаковку.</span>
-          </div>
-
-          <button class="info-btn">Заказать</button>
-        </div>
-      </div>
     </div>
+    <script src="js/product.js"></script>
   </body>
 </html>

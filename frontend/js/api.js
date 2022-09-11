@@ -5,6 +5,14 @@ const BASE_URL = "http://localhost/";
 const TIMEOUT = 500;
 
 
+function getPaymentMethods() {
+    return $.ajax(BASE_URL + "payment_methods.php", {
+        type: "GET",
+        dataType: "json",
+        timeout: TIMEOUT,
+    });
+}
+
 function getProducts(query) {
     return $.ajax(BASE_URL + "products.php", {
         type: "GET",
