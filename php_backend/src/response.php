@@ -19,7 +19,7 @@ function response($resp) {
 
 
 function response_error($code, $msg) {
-    $resp = array("status" => $code, "error_msg" => $msg);
+    $resp = array("status" => $code, "errorMsg" => $msg);
     echo json_encode($resp);
     exit;
 }

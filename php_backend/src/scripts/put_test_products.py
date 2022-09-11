@@ -27,7 +27,7 @@ products = [*(
         "price": str(p["price"]),
         "rating": str(p["rating"]),
         "description": p["description"],
-        "image_url": p["images"][0],
+        "imageURL": p["images"][0],
     }, products)
 )]
 
@@ -50,8 +50,8 @@ resp_json = r.json()
 api_status = resp_json["status"]
 
 if api_status != 0:
-    err_msg = resp_json["error_msg"]
-    raise SystemExit(f"error: api error code {status_code}: {err_msg}")
+    err_msg = resp_json["errorMsg"]
+    raise SystemExit(f"error: api error code {api_status}: {err_msg}")
 
 
 print("successful", file=sys.stderr)

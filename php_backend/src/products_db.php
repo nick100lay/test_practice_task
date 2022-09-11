@@ -15,7 +15,7 @@ function get_products($query, $query_type, $limit) {
     if ($query == "") {
         $sql =
             "
-            SELECT id, name, price, rating, description, image_url
+            SELECT id, name, price, rating, description, image_url AS imageURL
                 FROM products
                 ORDER BY rating DESC
                 LIMIT :limit
@@ -23,7 +23,7 @@ function get_products($query, $query_type, $limit) {
     } elseif ($query_type == "id") {
         $sql =
             "
-            SELECT id, name, price, rating, description, image_url
+            SELECT id, name, price, rating, description, image_url AS imageURL
                 FROM products
                 WHERE id = :query
                 LIMIT :limit
@@ -39,7 +39,7 @@ function get_products($query, $query_type, $limit) {
 
         $sql =
             "
-            SELECT search.id, search.name, search.price, search.rating, search.description, search.image_url
+            SELECT search.id, search.name, search.price, search.rating, search.description, search.image_url AS imageURL
                 FROM (" . $sql . ") as search
                 ORDER BY search.rating DESC
             ";
@@ -92,15 +92,15 @@ function put_products($products) {
         $product["description"] = $product["description"] == null ?
                 null :
                 trim($product["description"]);
-        $product["image_url"] = $product["image_url"] == null ?
+        $product["imageURL"] = $product["imageURL"] == null ?
                 null :
-                trim($product["image_url"]);
+                trim($product["imageURL"]);
 
         $stm->bindParam("description" . $i, $product["description"],
             $product["description"] == null ?
                 PDO::PARAM_NULL : PDO::PARAM_STR);
-        $stm->bindParam("image_url" . $i, $product["image_url"],
-            $product["image_url"] == null ?
+        $stm->bindParam("image_url" . $i, $product["imageURL"],
+            $product["imageURL"] == null ?
                 PDO::PARAM_NULL : PDO::PARAM_STR);
         ++$i;
     }

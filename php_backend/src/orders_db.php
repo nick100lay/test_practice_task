@@ -19,18 +19,18 @@ function get_orders($query, $query_type) {
 
     $sql = "SELECT
                 orders.id,
-                orders.product_id,
-                products.name AS product_name,
-                products.price AS product_price,
-                products.image_url AS product_image_url,
-                orders.payment_method_id,
-                payment_methods.name AS payment_method_name,
-                orders.phone_number,
-                orders.first_name,
-                orders.second_name,
-                orders.is_entity,
-                orders.contract_number,
-                orders.created_at
+                orders.product_id AS productId,
+                products.name AS productName,
+                products.price AS productPrice,
+                products.image_url AS productImageURL,
+                orders.payment_method_id AS paymentMethodId,
+                payment_methods.name AS paymentMethodName,
+                orders.phone_number AS phoneNumber,
+                orders.first_name AS firstName,
+                orders.second_name AS secondName,
+                orders.is_entity AS isEntity,
+                orders.contract_number as contractNumber,
+                orders.created_at AS createdAt
                 FROM orders
                 INNER JOIN payment_methods
                 ON orders.payment_method_id = payment_methods.id
@@ -84,23 +84,23 @@ function put_orders($orders) {
 
     $i = 0;
     foreach ($orders as $order) {
-        $order["phone_number"] = trim($order["phone_number"]);
-        $order["first_name"] = trim($order["first_name"]);
-        $order["second_name"] = trim($order["second_name"]);
-        $order["contract_number"] =
-            $order["contract_number"] == null ? null :
-            trim($order["contract_number"]);
+        $order["phoneNumber"] = trim($order["phoneNumber"]);
+        $order["firstName"] = trim($order["firstName"]);
+        $order["secondName"] = trim($order["secondName"]);
+        $order["contractNumber"] =
+            $order["contractNumber"] == null ? null :
+            trim($order["contractNumber"]);
 
-        $stm->bindParam("product_id" . $i, $order["product_id"]);
-        $stm->bindParam("payment_method_id" . $i, $order["payment_method_id"]);
-        $stm->bindParam("phone_number" . $i, $order["phone_number"]);
-        $stm->bindParam("first_name" . $i, $order["first_name"]);
-        $stm->bindParam("second_name" . $i, $order["second_name"]);
-        $stm->bindParam("is_entity" . $i, $order["is_entity"], PDO::PARAM_BOOL);
+        $stm->bindParam("product_id" . $i, $order["productId"]);
+        $stm->bindParam("payment_method_id" . $i, $order["paymentMethodId"]);
+        $stm->bindParam("phone_number" . $i, $order["phoneNumber"]);
+        $stm->bindParam("first_name" . $i, $order["firstName"]);
+        $stm->bindParam("second_name" . $i, $order["secondName"]);
+        $stm->bindParam("is_entity" . $i, $order["isEntity"], PDO::PARAM_BOOL);
 
         $stm->bindParam("contract_number" . $i,
-            $order["contract_number"],
-            $order["contract_number"] == null ?
+            $order["contractNumber"],
+            $order["contractNumber"] == null ?
                 PDO::PARAM_NULL : PDO::PARAM_STR);
         ++$i;
     }

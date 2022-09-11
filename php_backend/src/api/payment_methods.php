@@ -25,7 +25,7 @@ if ($method == "GET") {
 
     $result = get_payment_methods();
 
-    response(array("payment_methods" => $result));
+    response(array("paymentMethods" => $result));
 }
 
 ?>

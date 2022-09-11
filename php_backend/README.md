@@ -40,7 +40,7 @@ python  test_api.py <domain> # Протестировать API
 ```json
 {
 	"status": "int",
-	"error_msg": "string"
+	"errorMsg": "string"
 }
 ```
 Если ошибок нет, то JSON будет иметь статус 0:
@@ -86,10 +86,10 @@ const ERROR_DB_FAIL = 6;
 ```json
 {
 	"status": 0,
-	"payment_methods": [
+	"paymentMethods": [
 		{
-			"id": "string", 
-			"name": "string" 
+			"id": "string",
+			"name": "string"
 		}
 		...
 	]
@@ -114,7 +114,8 @@ const ERROR_DB_FAIL = 6;
 			"name": "string",
 			"price": "string",
 			"rating": "string",
-			"description": "string|null"
+			"description": "string|null",
+			"imageURL": "string|null"
 		}
 		...
 	]
@@ -131,7 +132,8 @@ const ERROR_DB_FAIL = 6;
 		"name": "string",
 		"price": "string",
 		"rating": "string",
-		"description": "string optional"
+		"description": "string optional",
+        "imageURL": "string optional"
 	}
 	...
 ]
@@ -155,24 +157,24 @@ const ERROR_DB_FAIL = 6;
 	"orders": [
 		{
 			"id": "string",
-			"product_id": "string",
-			"product_name": "string",
-			"product_price": "string",
-			"product_image_url": "string|null"
-			"payment_method_id": "string",
-			"payment_method_name": "string",
+			"productId": "string",
+			"productName": "string",
+			"productPrice": "string",
+			"productImageURL": "string|null"
+			"paymentMethodId": "string",
+			"paymentMethodName": "string",
 
 			// Номер телефона виде '+7 xxx xxx-xx-xx'.
-			"phone_number": "string",
+			"phoneNumber": "string",
 
-			"first_name": "string",
-			"second_name": "string",
-			"is_entity": "boolean",
+			"firstName": "string",
+			"secondName": "string",
+			"isEntity": "boolean",
 
 			// Всегда указан при "is_entity" == true
-			"contract_number": "string|null",
+			"contractNumber": "string|null",
 
-			"created_at": "string",
+			"createdAt": "string",
 		}
 		...
 	]
@@ -185,18 +187,18 @@ const ERROR_DB_FAIL = 6;
 ```json
 [
 	{
-			"product_id": "string",
-			"payment_method_id": "string",
+			"productId": "string",
+			"paymentMethodId": "string",
 
 			// Номер телефона должен быть в виде '+7 xxx xxx-xx-xx'.
-			"phone_number": "string",
+			"phoneNumber": "string",
 
-			"first_name": "string",
-			"second_name": "string",
+			"firstName": "string",
+			"secondName": "string",
 
-			"is_entity": "boolean",
+			"isEntity": "boolean",
 			// Всегда должен указываться при "is_entity" == true
-			"contract_number": "string optional"
+			"contractNumber": "string optional"
 	}
 	...
 ]

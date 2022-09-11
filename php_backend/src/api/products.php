@@ -92,7 +92,7 @@ if ($method == "PUT") {
             "price" => array("string", "required", $price_validator),
             "rating" => array("string", "required", $rating_validator),
             "description" => array("string", "optional", $description_validator, "def" => null),
-            "image_url" => array("string", "optional", $image_url_validator, "def" => null),
+            "imageURL" => array("string", "optional", $image_url_validator, "def" => null),
         ));
     }
 

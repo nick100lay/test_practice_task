@@ -49,14 +49,14 @@ $phone_number_validator = function($val) {
 
 if ($method == "GET") {
     validate($json, array(
-        "contract_number" => array("string", "optional", $contract_number_validator, "def" => ""),
-        "phone_number" => array("string", "optional", $phone_number_validator, "def" => ""),
+        "contractNumber" => array("string", "optional", $contract_number_validator, "def" => ""),
+        "phoneNumber" => array("string", "optional", $phone_number_validator, "def" => ""),
     ));
 
     $result = array();
 
-    $contract_number = $json["contract_number"];
-    $phone_number = $json["phone_number"];
+    $contract_number = $json["contractNumber"];
+    $phone_number = $json["phoneNumber"];
 
     if ($contract_number != "") {
         $result = get_orders($contract_number, "contract");
@@ -75,15 +75,15 @@ if ($method == "PUT") {
 
     foreach ($json as &$order_json) {
         validate($order_json, array(
-            "product_id" => array("string", "required"),
-            "payment_method_id" => array("string", "required"),
-            "phone_number" => array("string", "required", $phone_number_validator),
-            "first_name" => array("string", "required", $str_is_not_empty),
-            "second_name" => array("string", "required", $str_is_not_empty),
-            "is_entity" => array("boolean", "required",),
-            "contract_number" => array("string", "optional", $contract_number_validator, "def" => null),
+            "productId" => array("string", "required"),
+            "paymentMethodId" => array("string", "required"),
+            "phoneNumber" => array("string", "required", $phone_number_validator),
+            "firstName" => array("string", "required", $str_is_not_empty),
+            "secondName" => array("string", "required", $str_is_not_empty),
+            "isEntity" => array("boolean", "required",),
+            "contractNumber" => array("string", "optional", $contract_number_validator, "def" => null),
         ));
-        if ($order_json["is_entity"] && $order_json["contract_number"] == null) {
+        if ($order_json["isEntity"] && $order_json["contractNumber"] == null) {
             response_error(ERROR_INVALID_JSON_VALUES,
                 "invalid input json");
         }
