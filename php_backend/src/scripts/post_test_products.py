@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
     prog = sys.argv[0]
     raise SystemExit(f"usage: {prog} <url>")
 
-url = sys.argv[1]
+base_url = sys.argv[1]
 
 
 test_products_url = "https://dummyjson.com/products"
@@ -33,7 +33,7 @@ products = [*(
 
 
 try:
-    r = requests.put(f"{url}/products.php", json=products)
+    r = requests.post(f"{base_url}/products.php", json=products)
 except requests.exceptions.MissingSchema as e:
     raise SystemExit(f"error: {str(e)}") from e
 except requests.exceptions.RequestException as e:
@@ -41,17 +41,8 @@ except requests.exceptions.RequestException as e:
 
 
 status_code = r.status_code
-if status_code != 200:
-    text = r.text
-    raise SystemExit(f"error: http status code {status_code}: {text}")
+text = r.text
+if status_code not in range(200, 300):
+    raise SystemExit(f"error: http status code {status_code}:\n{text}")
 
-resp_json = r.json()
-
-api_status = resp_json["status"]
-
-if api_status != 0:
-    err_msg = resp_json["errorMsg"]
-    raise SystemExit(f"error: api error code {api_status}: {err_msg}")
-
-
-print("successful", file=sys.stderr)
+print(status_code, "\n", text, file=sys.stderr)

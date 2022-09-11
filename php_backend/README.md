@@ -36,93 +36,56 @@ python  test_api.py <domain> # Протестировать API
 
 ### Ошибки
 
-В случае ошибки возвращается код и сообщение:
-```json
-{
-	"status": "int",
-	"errorMsg": "string"
-}
+В случае ошибки возвращается  http статус код и сообщение:
 ```
-Если ошибок нет, то JSON будет иметь статус 0:
-```json
-{
-	"status": 0,
-	...
-}
-```
-Коды ошибок:
-```php
-const ERROR_NONE = 0;
-
-// Failed to decode input json
-const ERROR_WRONG_INPUT = 1;
-
-// Invalid JSON values
-const ERROR_INVALID_JSON_VALUES = 2;
-
-// Environment variable
-// DB_DSN or DB_USERNAME is not set
-const ERROR_NO_DB = 3;
-
-// Failed to create pdo
-const ERROR_PDO_FAILED = 4;
-
-// pdo driver is unsupported
-const ERROR_PDO_DRIVER_UNSUPPORTED = 5;
-
-// Fail with DB
-const ERROR_DB_FAIL = 6;
+400 - Bad GET
+400 - Bad JSON
+500 - <Ошикби, связанные с БД>
 ```
 
-###POST /init.php
+### POST /init.php
 Инизиализировать БД.
 Используется только для развертывания бекенда.
 Ничего не принимает.
-Возвращает JSON со статусом 0.
+Возвращает сообщение об успешной инициализации БД.
 
-###GET /payment_methods.php
+### GET /payment_methods.php
 Получить все поддерживаемые способы оплаты.
 Ничего не принимает. Возвращает JSON следующего вида:
 ```json
-{
-	"status": 0,
-	"paymentMethods": [
-		{
-			"id": "string",
-			"name": "string"
-		}
-		...
-	]
-}
+[
+	{
+		"id": "string",
+		"name": "string"
+	}
+	...
+]
 ```
 
-###GET /products.php
+### GET /products.php
 Получить товары по запросу, либо получить товары с большим рейтингом.
-Принимает JSON следующих видов:
-```json
-{"id": "string"} // Получить по id
-{"query": "string"} // Получить по текстовому запросу
-{} // Получить товары с большим рейтингом
+Принимает URL следующих видов:
+```
+/products.php?id=<string> - Получить товар по id
+/products.php?query=<string> - Получить товар по текстовому запросу
+/products.php - Получить товары с большим рейтингом
 ```
 Возвращает JSON следующего вида (возвращаемые товары отсортированы по убыванию рейтингу):
 ```json
 [
-	"status": 0,
-	"products": [
-		{
-			"id": "string",
-			"name": "string",
-			"price": "string",
-			"rating": "string",
-			"description": "string|null",
-			"imageURL": "string|null"
-		}
-		...
-	]
+	{
+		"id": "string",
+		"name": "string",
+		"price": "string",
+		"rating": "string",
+		"description": "string|null",
+		"imageURL": "string|null"
+	}
+	...
 ]
 ```
 
-###PUT /products.php
+### POST /products.php
 Создать товары.
 Принимает JSON следующего вида:
 ```json
@@ -138,50 +101,44 @@ const ERROR_DB_FAIL = 6;
 	...
 ]
 ```
-Возвращает JSON со статусом 0.
+Возвращает сообщение об успешном создании товаров.
 
-###GET /orders.php
+### GET /orders.php
 Получить заказы по номеру телефона или номера договора.
-Принимает JSON следующих видов:
-```json
-// Номер телефона должен быть в виде '+7 xxx xxx-xx-xx'.
-// Получить по номеру телефона
-{"phone_number": "string"}
-
-{"contract_number": "string"} // Получить по номеру договора
+Принимает URL следующих видов:
 ```
-Возвращает JSON следующего вида (возвращаемые товары отсортированы по убыванию рейтингу):
+/orders.php?phoneNumber=<string> - Получить заказ по номеру телефона
+/orders.php?contractNumber=<string> - Получить заказ по номеру договора
+```
+Возвращает JSON следующего вида:
 ```json
 [
-	"status": 0,
-	"orders": [
-		{
-			"id": "string",
-			"productId": "string",
-			"productName": "string",
-			"productPrice": "string",
-			"productImageURL": "string|null"
-			"paymentMethodId": "string",
-			"paymentMethodName": "string",
+	{
+		"id": "string",
+		"productId": "string",
+		"productName": "string",
+		"productPrice": "string",
+		"productImageURL": "string|null"
+		"paymentMethodId": "string",
+		"paymentMethodName": "string",
 
-			// Номер телефона виде '+7 xxx xxx-xx-xx'.
-			"phoneNumber": "string",
+		// Номер телефона виде '+7 xxx xxx-xx-xx'.
+		"phoneNumber": "string",
 
-			"firstName": "string",
-			"secondName": "string",
-			"isEntity": "boolean",
+		"firstName": "string",
+		"secondName": "string",
+		"isEntity": "boolean",
 
-			// Всегда указан при "is_entity" == true
-			"contractNumber": "string|null",
+		// Всегда указан при "is_entity" == true
+		"contractNumber": "string|null",
 
-			"createdAt": "string",
-		}
-		...
-	]
+		"createdAt": "string",
+	}
+	...
 ]
 ```
 
-###PUT /orders.php
+### POST /orders.php
 Создать заказы.
 Принимает JSON следующего вида:
 ```json
@@ -203,4 +160,4 @@ const ERROR_DB_FAIL = 6;
 	...
 ]
 ```
-Возвращает JSON со статусом 0.
+Возвращает сообщение об успешном создании заказов.

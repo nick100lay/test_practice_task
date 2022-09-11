@@ -52,14 +52,13 @@ function get_products($query, $query_type, $limit) {
     $stm->execute();
     $errors = $stm->errorInfo();
     if ($errors[2] !== null) {
-        response_error(ERROR_DB_FAIL,
-            "failed to get products");
+        error_server("failed to get products");
     }
     return $stm->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
-function put_products($products) {
+function post_products($products) {
     $pdo = get_pdo();
 
     $values_sql = array();
@@ -108,8 +107,7 @@ function put_products($products) {
     $stm->execute();
     $errors = $stm->errorInfo();
     if ($errors[2] !== null) {
-        response_error(ERROR_DB_FAIL,
-            "failed to put products");
+        error_server("failed to post products");
     }
 }
 

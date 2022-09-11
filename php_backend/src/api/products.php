@@ -1,28 +1,19 @@
 <?php
 
 
-require_once "preset.php";
 require_once "response.php";
 require_once "request.php";
 require_once "pdo.php";
 require_once "products_db.php";
 require_once "validators.php";
 
-preset();
-
 
 $method = request_method();
 
 
-if ($method != "GET" && $method != "PUT") {
-    response_unsupported_method();
+if ($method != "GET" && $method != "POST") {
+    error_unsupported_method();
 }
-
-
-create_pdo();
-
-
-$json = request_to_json();
 
 
 if ($method == "GET") {
@@ -32,25 +23,27 @@ if ($method == "GET") {
     };
 
 
-    validate($json, array(
+    validate_get(array(
         "id" => array("string", "optional", $str_is_not_empty, "def" => ""),
         "query" => array("string", "optional", $str_is_not_empty, "def" => ""),
     ));
 
-    $query = $json["query"];
-    $id = $json["id"];
+    $query = $_GET["query"];
+    $id = $_GET["id"];
     $result = array();
 
     if ($id != "") {
-        $result = get_products($id, "id", 30);
+        $result = get_products($id, "id", 1);
     } else {
         $result = get_products($query, "search", 30);
     }
 
-    response(array("products" => $result));
+    response_json($result);
 }
 
-if ($method == "PUT") {
+if ($method == "POST") {
+    $json = request_to_json();
+
     $name_validator = function($val) {
         $val = trim($val);
         return strlen($val) >= 3 && strlen($val) < 100;
@@ -87,7 +80,7 @@ if ($method == "PUT") {
     };
 
     foreach ($json as &$product_json) {
-        validate($product_json, array(
+        validate_json($product_json, array(
             "name" => array("string", "required", $name_validator),
             "price" => array("string", "required", $price_validator),
             "rating" => array("string", "required", $rating_validator),
@@ -96,8 +89,8 @@ if ($method == "PUT") {
         ));
     }
 
-    put_products($json);
-    response(array());
+    post_products($json);
+    response_successful("Post products successfully");
 }
 
 ?>

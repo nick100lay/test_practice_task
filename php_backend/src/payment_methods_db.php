@@ -17,8 +17,7 @@ function get_payment_methods() {
     $stm->execute();
     $errors = $stm->errorInfo();
     if ($errors[2] !== null) {
-        response_error(ERROR_DB_FAIL,
-            "failed to get payment methods");
+        error_server("failed to get payment methods");
     }
     return $stm->fetchAll(PDO::FETCH_ASSOC);
 }

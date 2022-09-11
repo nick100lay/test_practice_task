@@ -10,10 +10,10 @@ if len(sys.argv) != 2:
     prog = sys.argv[0]
     raise SystemExit(f"usage: {prog} <url>")
 
-url = sys.argv[1]
+base_url = sys.argv[1]
 
 try:
-    r = requests.post(f"{url}/init.php")
+    r = requests.post(f"{base_url}/init.php")
 except requests.exceptions.MissingSchema as e:
     raise SystemExit(f"error: {str(e)}") from e
 except requests.exceptions.RequestException as e:
@@ -21,17 +21,9 @@ except requests.exceptions.RequestException as e:
 
 
 status_code = r.status_code
-if status_code != 200:
-    text = r.text
-    raise SystemExit(f"error: http status code {status_code}: {text}")
-
-resp_json = r.json()
-
-api_status = resp_json["status"]
-
-if api_status != 0:
-    err_msg = resp_json["errorMsg"]
-    raise SystemExit(f"error: api error code {api_status}: {err_msg}")
+text = r.text
+if status_code not in range(200, 300):
+    raise SystemExit(f"error: http status code {status_code}:\n{text}")
 
 
-print("successful", file=sys.stderr)
+print(status_code, "\n", text, file=sys.stderr)

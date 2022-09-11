@@ -68,8 +68,7 @@ function init_db() {
     $stm->execute();
     $errors = $stm->errorInfo();
     if ($errors[2] !== null) {
-        response_error(ERROR_DB_FAIL,
-            "failed to initialize DB");
+        error_server("failed to initialize DB");
     }
 }
 

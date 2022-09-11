@@ -9,8 +9,7 @@ function create_pdo() {
     $username = getenv("DB_USERNAME");
     $password = getenv("DB_PASSWORD");
     if ($dsn === false || $username === false) {
-        response_error(ERROR_NO_DB,
-            "environment variable DB_DSN or DB_USERNAME is not set");
+        error_server("environment variable DB_DSN or DB_USERNAME is not set");
     }
     try {
         $pdo = new PDO(
@@ -19,18 +18,19 @@ function create_pdo() {
             $password,
         );
     } catch (PDOException $e) {
-        response_error(ERROR_PDO_FAILED,
-            "failed to create pdo: " . $e->getMessage());
+        error_server("failed to create pdo: " . $e->getMessage());
     }
     if ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) != "mysql") {
-        response_error(ERROR_PDO_DRIVER_UNSUPPORTED,
-            "wrong pdo driver, only mysql is supported");
+        error_server("wrong pdo driver, only mysql is supported");
     }
     $GLOBALS["pdo"] = $pdo;
 }
 
 
 function get_pdo() {
+    if (!array_key_exists("pdo", $GLOBALS)) {
+        create_pdo();
+    }
     return $GLOBALS["pdo"];
 }
 

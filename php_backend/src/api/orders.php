@@ -1,28 +1,19 @@
 <?php
 
 
-require_once "preset.php";
 require_once "response.php";
 require_once "request.php";
 require_once "pdo.php";
 require_once "orders_db.php";
 require_once "validators.php";
 
-preset();
-
 
 $method = request_method();
 
 
-if ($method != "GET" && $method != "PUT") {
-    response_unsupported_method();
+if ($method != "GET" && $method != "POST") {
+    error_unsupported_method();
 }
-
-
-create_pdo();
-
-
-$json = request_to_json();
 
 
 $contract_number_validator = function($val) {
@@ -48,15 +39,19 @@ $phone_number_validator = function($val) {
 
 
 if ($method == "GET") {
-    validate($json, array(
+    validate_get(array(
         "contractNumber" => array("string", "optional", $contract_number_validator, "def" => ""),
         "phoneNumber" => array("string", "optional", $phone_number_validator, "def" => ""),
     ));
 
     $result = array();
 
-    $contract_number = $json["contractNumber"];
-    $phone_number = $json["phoneNumber"];
+    $contract_number = $_GET["contractNumber"];
+    $phone_number = $_GET["phoneNumber"];
+
+    if ($contract_number == "" && $phone_number == "") {
+        error_bad_get();
+    }
 
     if ($contract_number != "") {
         $result = get_orders($contract_number, "contract");
@@ -65,16 +60,18 @@ if ($method == "GET") {
     }
 
 
-    response(array("orders" => $result));
+    response_json($result);
 }
 
-if ($method == "PUT") {
+if ($method == "POST") {
+    $json = request_to_json();
+
     $str_is_not_empty = function($query) {
         return trim($query) != "";
     };
 
     foreach ($json as &$order_json) {
-        validate($order_json, array(
+        validate_json($order_json, array(
             "productId" => array("string", "required"),
             "paymentMethodId" => array("string", "required"),
             "phoneNumber" => array("string", "required", $phone_number_validator),
@@ -84,13 +81,15 @@ if ($method == "PUT") {
             "contractNumber" => array("string", "optional", $contract_number_validator, "def" => null),
         ));
         if ($order_json["isEntity"] && $order_json["contractNumber"] == null) {
-            response_error(ERROR_INVALID_JSON_VALUES,
-                "invalid input json");
+            error_bad_json();
+        }
+        if (!$order_json["isEntity"] && $order_json["contractNumber"] != null) {
+            error_bad_json();
         }
     }
 
-    put_orders($json);
-    response(array());
+    post_orders($json);
+    response_successful("Post orders successfully");
 }
 
 ?>
