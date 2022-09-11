@@ -6,6 +6,9 @@ require_once "pdo.php";
 require_once "init_db.php";
 
 
+require_once "headers.php";
+
+
 $method = request_method();
 
 

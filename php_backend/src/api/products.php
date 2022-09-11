@@ -8,6 +8,9 @@ require_once "products_db.php";
 require_once "validators.php";
 
 
+require_once "headers.php";
+
+
 $method = request_method();
 
 

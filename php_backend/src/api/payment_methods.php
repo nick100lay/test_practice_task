@@ -7,6 +7,9 @@ require_once "pdo.php";
 require_once "payment_methods_db.php";
 
 
+require_once "headers.php";
+
+
 $method = request_method();
 
 
