@@ -36,7 +36,7 @@ function getProductById(id) {
 function postProducts(...products) {
     return $.ajax(BASE_URL + "products.php", {
         type: "POST",
-        data: products,
+        data: JSON.stringify(products),
         timeout: TIMEOUT,
     });
 }
@@ -63,10 +63,10 @@ function getOrdersByContractNumber(contractNumber) {
 
 
 function postOrders(...orders) {
+    console.log(orders);
     return $.ajax(BASE_URL + "orders.php", {
         type: "POST",
-        data: orders,
-        dataType: "json",
+        data: JSON.stringify(orders),
         timeout: TIMEOUT,
     });
 }
