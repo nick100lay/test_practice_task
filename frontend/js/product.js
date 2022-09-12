@@ -127,7 +127,6 @@ popup.find("#send-btn").on("click", () => {
         return;
     }
     json["productId"] = productId;
-    console.log(json);
     popup.waitMe({
         effect : "roundBounce",
         text : "",

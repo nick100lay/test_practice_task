@@ -63,7 +63,6 @@ function getOrdersByContractNumber(contractNumber) {
 
 
 function postOrders(...orders) {
-    console.log(orders);
     return $.ajax(BASE_URL + "orders.php", {
         type: "POST",
         data: JSON.stringify(orders),

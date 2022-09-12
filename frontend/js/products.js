@@ -24,10 +24,11 @@ getProducts()
     .always(() => { content.waitMe("hide"); })
     .done((products) => {
         products.forEach((product) => {
-            let el = productsContainer.append(
-                renderProduct(product));
+            let el = $(renderProduct(product));
+            productsContainer.append(el);
+            let id = product.id;
             el.on("click", () => {
-                window.location.href = `product.html?id=${product.id}`;
+                window.location.href = `product.html?id=${id}`;
             });
         });
     })
